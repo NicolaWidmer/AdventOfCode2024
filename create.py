@@ -36,9 +36,10 @@ code = f"""(ns code.day{day}
 (defn solve2 [in]
   )
 
-(println (solve1 parsedInput))
-(println (solve2 parsedInput))
+(println parsedTest)
+;;(println (solve1 parsedTest))
 ;;(println (solve1 parsedInput))
+;;(println (solve2 parsedTest))
 ;;(println (solve2 parsedInput))
 """
 print(code)
