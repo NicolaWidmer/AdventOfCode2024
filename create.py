@@ -21,6 +21,7 @@ code = f"""(ns code.day{day}
   (->> data
        (str/split-lines)
        ;;(map Integer/parseInt)
+       ;;(map #(map Integer/parseInt (str/split % #" ")))))
        (map #(map Integer/parseInt (rest (re-matches #\"(\\d+)   (\\d+)\"  %))))))
 
 (def parsedInput (parse input))
