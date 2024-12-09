@@ -46,14 +46,7 @@
 
 
 (defn solve1 [in]
-  (rec1 in 0 0)
-  )
-
-(defn make-explixit [ind lst] 
-  (if (= (count lst) 1)
-    (repeat (first lst) ind)
-    (concat (repeat (first lst) ind) (repeat (second lst) -1) (make-explixit (+ ind 1) (rest (rest lst))))
-  ))
+  (rec1 in 0 0))
 
 (defn make-explixit [ind lst]
   (if (= (count lst) 1)
@@ -63,19 +56,7 @@
 (defn is-free [[pro num ind]]
   (= ind -1))
 
-(defn clean-up [lst zeros]
-  (println lst)
-  (println zeros)
-  (if (empty? lst) []
-      ( let [fst (first lst)]
-       (if (is-free fst)
-         (clean-up (rest lst) (+ zeros (second fst)))
-         (if (= zeros 0)
-           (concat (vector fst) (clean-up (rest lst) 0))
-           (concat (vector (vector true zeros -1) fst) (clean-up (rest lst) 0))
-         )))))
-
-(defn step2 [cur-lst cur]
+(defn step [cur-lst cur]
   (let [new (list-update-in cur 0 true)]
    (if (empty? cur-lst)
     (vector new) 
@@ -84,11 +65,7 @@
            cur-len (second fst)]
        (if (and (is-free fst) (<= len cur-len))
          (concat (vector new (list-update-in fst 1 (- cur-len len))) (concat (rest cur-lst) (vector (vector true len -1))))
-         (concat (vector fst) (step2 (rest cur-lst) cur)))
-    ))))
-
-(defn step [cur-lst cur]
-  (clean-up (step2 cur-lst cur) 0))
+         (concat (vector fst) (step (rest cur-lst) cur)))))))
 
 (defn process [lst]
   (let [rev (reverse lst)] 
@@ -96,23 +73,14 @@
       rev (let [fst (first rev)
                 rst (rest rev)]
             (if (first fst) (concat (process (reverse rst)) (vector fst))
-                (process (step2 (reverse rst) fst)))
-           ))))
+                (process (step (reverse rst) fst)))))))
 
 (defn sum2 [lst ind]
   (if (empty? lst) 0 
       (let [fst (first lst)]
         (if (is-free fst)
           (sum2 (rest lst) (+ ind (second fst)))
-          (+ (* (nth fst 2) (euler-sum ind (second fst))) (sum2 (rest lst) (+ ind (second fst)))) )
-        ))
-  )
-
-(defn find-loc [ind lst cur]
-  (if (= (first lst) ind) -1
-      ())
-  )
-
+          (+ (* (nth fst 2) (euler-sum ind (second fst))) (sum2 (rest lst) (+ ind (second fst))))))))
 
 (defn solve2 [in]
   (let [exp (make-explixit 0 in)] 
@@ -120,7 +88,7 @@
     (sum2 (process exp) 0)))
 
 ;;(println parsedTest)
-;;(println (solve1 parsedTest))
-(println (solve1 parsedInput))
-;;(println (solve2 parsedTest))
-(println (solve2 parsedInput))
+(println (solve1 parsedTest))
+;;(println (solve1 parsedInput))
+(println (solve2 parsedTest))
+;;(println (solve2 parsedInput))
