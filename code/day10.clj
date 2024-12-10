@@ -52,11 +52,11 @@
       0
       (if (= cur 9)
         1
-        (sum [(dfs2 (+ i 1) j (+ cur 1) grid n m) 
-              (dfs2 (- i 1) j (+ cur 1) grid n m) 
-              (dfs2 i (+ j 1) (+ cur 1) grid n m) 
-              (dfs2 i (- j 1) (+ cur 1) grid n m)]
-              )))))
+        (+ (dfs2 (+ i 1) j (+ cur 1) grid n m) 
+           (dfs2 (- i 1) j (+ cur 1) grid n m)  
+           (dfs2 i (+ j 1) (+ cur 1) grid n m)  
+           (dfs2 i (- j 1) (+ cur 1) grid n m)
+           )))))
 
 (defn solve1 [in]
   (let [n (count in)
