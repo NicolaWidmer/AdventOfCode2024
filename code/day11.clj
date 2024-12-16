@@ -35,17 +35,17 @@
 
 (defn aux [s x times]
   (if (= 0 x)
-    (update-map s 1 times)
-  (if (even? (count (str x))) 
-    (let [n1 (seq-to-int (reverse (first-half (str x))))
-          n2 (seq-to-int (reverse (second-half (str x))))
-          s1 (update-map s n1 times)]
-      (update-map s1 n2 times))
-    (update-map s (* x 2024) times))))
+    (update-map s 1 times) 
+    (if (even? (count (str x))) 
+      (let [n1 (seq-to-int (reverse (first-half (str x)))) 
+            n2 (seq-to-int (reverse (second-half (str x)))) 
+            s1 (update-map s n1 times)] 
+        (update-map s1 n2 times)) 
+      (update-map s (* x 2024) times))))
 
 (defn rec [x rounds]
- (if (= 0 rounds)
-  (sum (map second x))
+ (if (= 0 rounds) 
+   (sum (map second x)) 
    (rec (reduce #(aux %1 (first %2) (second %2)) {} x) (- rounds 1))))
 
 (defn solve1 [in]
